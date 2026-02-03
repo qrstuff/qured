@@ -22,9 +22,8 @@
     "build": "vite build && tsc",
     "dev": "vite build --watch",
     "test": "mocha",
-    "posttest": "npm run format",
     "test:browser": "playwright test",
-    "type-check": "tsc -b",
+    "type-check": "tsc --noEmit",
     "prepare": "husky"
   },
   "keywords": [
