@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Qured browser tests</title>
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/mocha@10/mocha.css"
+		/>
+	</head>
+	<body>
+		<div id="mocha"></div>
+		<script src="https://cdn.jsdelivr.net/npm/mocha@10/mocha.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/chai@4/chai.js"></script>
+		<script>
+			mocha.setup({ ui: "bdd", timeout: 10000 });
+		</script>
+		<script type="module" src="/test/browser/decode-test.js"></script>
+	</body>
+</html>
