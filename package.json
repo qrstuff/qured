@@ -1,5 +1,5 @@
 {
-  "name": "qured",
+  "name": "@qrstuff/qured",
   "version": "0.1.0",
   "description": "Decode QR codes from images in browser and Node.js — file, blob, buffer, or base64",
   "type": "module",

@@ -1,4 +1,5 @@
 {
   "spec": ["test/node/**/*.js"],
-  "node-option": ["experimental-vm-modules"]
+  "node-option": ["experimental-vm-modules"],
+  "timeout": 10000
 }

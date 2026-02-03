@@ -35,7 +35,7 @@
 ## Install
 
 ```bash
-yarn add qured
+yarn add @qrstuff/qured
 ```
 
 For **Node.js** image loading (decoding from file paths or raw buffers), add the optional dependency:
@@ -51,7 +51,7 @@ yarn add canvas
 ### Browser
 
 ```js
-import { decode } from "qured";
+import { decode } from "@qrstuff/qured";
 
 // From <input type="file">
 const file = document.querySelector('input[type="file"]').files[0];
@@ -69,7 +69,7 @@ Serve the built `dist/` (including `qured.js`, `decodeWorker.js`, and any chunk 
 ### Node.js
 
 ```js
-import { decode } from "qured";
+import { decode } from "@qrstuff/qured";
 import { readFileSync } from "fs";
 
 const buffer = readFileSync("./qrcode.png");
@@ -84,7 +84,7 @@ In Node, use `{ worker: false }`; worker URL resolution is intended for the brow
 If you already have `ImageData` (e.g. from a canvas), you can skip image loading and worker:
 
 ```js
-import { decodeFromImageData } from "qured";
+import { decodeFromImageData } from "@qrstuff/qured";
 
 const imageData = ctx.getImageData(0, 0, width, height);
 const result = await decodeFromImageData(imageData);
@@ -95,7 +95,7 @@ const result = await decodeFromImageData(imageData);
 To get every result found across preprocessing passes (e.g. for multi-QR or debugging):
 
 ```js
-import { decodeAll } from "qured";
+import { decodeAll } from "@qrstuff/qured";
 
 const results = await decodeAll(fileInput.files[0]);
 results.forEach(r => console.log(r.text, r.meta?.preprocessingPass));

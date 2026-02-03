@@ -6,7 +6,7 @@
 import { readFileSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { decode } from "qured";
+import { decode } from "@qrstuff/qured";
 import { expect } from "chai";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
