@@ -1,0 +1,76 @@
+# Requires NPM_TOKEN secret (https://www.npmjs.com/ → Access Tokens) with publish permission
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "yarn"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Install canvas dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev librsvg2-dev
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build
+        run: yarn build
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium firefox
+
+      - name: Node tests
+        run: yarn test
+
+      - name: Browser tests
+        run: yarn test:browser
+
+      - name: Get version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Update package.json version
+        run: npm pkg set version="${{ steps.version.outputs.VERSION }}"
+
+      - name: Generate changelog
+        run: |
+          PREV_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || true)
+          if [ -z "$PREV_TAG" ]; then
+            git log --pretty=format:"- %s (%h)" | head -100 > release-notes.md
+          else
+            git log $PREV_TAG..HEAD --pretty=format:"- %s (%h)" > release-notes.md
+          fi
+          if [ ! -s release-notes.md ]; then
+            echo "No changes since previous release" > release-notes.md
+          fi
+
+      - name: Publish to npm
+        run: npm publish --access public --provenance --no-git-tag-version
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          body_path: release-notes.md
+          generate_release_notes: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -198,6 +198,19 @@ The harness (`test/browser/browser-test.html`) loads Mocha, Chai, and Qured; `te
 
 ---
 
+## Releasing
+
+Push a version tag (e.g. `v1.0.0`) to trigger the release workflow:
+
+```bash
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+The workflow will run tests, publish to npm, and create a GitHub release with a changelog of commit messages since the previous tag. Configure the `NPM_TOKEN` repository secret (npm → Access Tokens) with publish permission.
+
+---
+
 ## License
 
 MIT
