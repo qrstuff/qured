@@ -186,11 +186,11 @@ Requires the optional **canvas** dependency so Node can load image files from `d
 
 ### Browser (Playwright)
 
-Browser tests run the same decode logic in a real browser (Chromium) via **Playwright**.
+Browser tests run the same decode logic in real browsers (Chromium, Firefox) via **Playwright**.
 
 ```bash
 yarn build
-npx playwright install chromium   # first run only
+npx playwright install chromium firefox   # first run only
 yarn test:browser
 ```
 
