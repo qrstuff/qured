@@ -35,6 +35,10 @@
     "node"
   ],
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/qrstuff/qured.git"
+  },
   "publishConfig": {
     "access": "public"
   },
